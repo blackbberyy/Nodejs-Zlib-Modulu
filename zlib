@@ -1,0 +1,39 @@
+ZLİB MODÜLÜ
+Zlib modülü, dosyaları sıkıştırmak ve açmak için bir yol sağlar.
+pipe()takes a readable stream and connects it to a writeable stream
+gzip büyük veri yığınlarını küçültmesiyle ünlü kayıpsız bir dosya sıkıştırma aracıdır
+deflate de sıkıştırma algoritmasına dahildir
+orijinal biçimine geri sıkıştırmak için gunzip veya decompess
+
+const zlib=require("zlib")
+const gzip=zlib.createGzip()
+const fs=require("fs")
+const inp=fs.createReadStream("test.txt")
+const out=fs.createWriteStream("test.txt.gz")
+inp.pipe(gzip).pipe(out)
+=test.txt yi   test.txt.gz içeriğine sıkıştırıp küçülttü
+
+Streams, kaynaktan sürekli veri okuyan ve hedef veriye kolayca aktarım yapılan nesnelerdir. Node.js 4 farklı streams çeşidi kullanır. Ben bunların üçünden bahsedeceğim.
+Readable Stream , kaynaktan veriyi okuyan akıştır
+Writable Stream , hedefe veriyi gönderen akıştır
+Duplex Stream , hem okuma hemde yazma işlemi yapan akıştır.
+
+readableStream.pipe(gzip).pipe(fs.WriteStream("./file2.txt.gz"))
+const writeableStream=fs.createWriteStream("./file2.txt")
+readableStream.pipe(writeable stream)
+Buffer, bellekteki belirli bellek konumunu ifade eder. Arabellek ve dizinin bazı benzerlikleri vardır, ancak fark, dizinin herhangi bir tür olabilmesi ve yeniden boyutlandırılabilmesidir.
+birden çok dosyayı sıkıştırmak için tarball  -z gzip
+
+const zlib = require('zlib');
+const fs = require('fs');
+// Dosya sıkıştırma
+const gzip = zlib.createGzip();
+const readStream = fs.createReadStream('dosya.txt');
+const writeStream = fs.createWriteStream('dosya.txt.gz');
+readStream.pipe(gzip).pipe(writeStream);
+// Dosya açma
+const gunzip = zlib.createGunzip();
+const readStream2 = fs.createReadStream('dosya.txt.gz');
+const writeStream2 = fs.createWriteStream('dosya2.txt');
+readStream2.pipe(gunzip).pipe(writeStream2);
+
